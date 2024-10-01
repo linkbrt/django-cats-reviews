@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from cats import serializers, models
+
+class CatView(viewsets.ModelViewSet):
+    serializer_class = serializers.CatSerializer
+    queryset = models.Cat.objects.all()
+
