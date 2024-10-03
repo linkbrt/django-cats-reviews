@@ -5,7 +5,7 @@ from users.models import Profile
 
 class Cat(models.Model):
     color = models.CharField(verbose_name='Цвет', max_length=50)
-    age = models.IntegerField(verbose_name='Возраст (в месяцах)')
+    age = models.PositiveIntegerField(verbose_name='Возраст (в месяцах)')
     description = models.TextField(
         verbose_name='Описание', 
         blank=True, null=True
