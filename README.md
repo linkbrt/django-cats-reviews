@@ -1,8 +1,8 @@
 # django-cats-reviews
 Python/Django project for test
 Стек: Django/Rest Framework/Postgres
-Документация Swagger: http://127.0.0.1:8000/swagger/
-Документация Redoc: http://127.0.0.1:8000/redoc/
+1. Документация Swagger: http://127.0.0.1:8000/swagger/
+2. Документация Redoc: http://127.0.0.1:8000/redoc/
 
 Для старта проекта :
 - Создать файл .env по образу .env.template. Заполнить данными для бд
