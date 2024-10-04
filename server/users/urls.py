@@ -11,7 +11,7 @@ from users import views
 
 
 router = DefaultRouter()
-router.register(r"register", views.CreateUserView, basename="register")
+router.register(r"register", views.UserView, basename="user")
 
 urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

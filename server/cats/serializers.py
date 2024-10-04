@@ -23,9 +23,3 @@ class CatSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Cat
         fields = "__all__"
-
-
-class BreedSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Breed
-        fields = "__all__"

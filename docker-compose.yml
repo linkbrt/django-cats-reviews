@@ -1,0 +1,26 @@
+version: '4.34.2'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=${POSTGRES_DBNAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: "on-failure"
+
+  web:
+    build: .
+    network_mode: host
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: "on-failure"
+
+volumes:
+  db_volume:

@@ -7,6 +7,5 @@ from cats import views
 router = SimpleRouter()
 router.register(r"cats", views.CatView, basename="cat")
 router.register(r"reviews", views.ReviewView, basename="review")
-router.register(r"breeds", views.BreedView, basename="breed")
 
 urlpatterns = router.urls
