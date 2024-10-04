@@ -6,7 +6,13 @@ from cats import models
 class CreateCatSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Cat
-        fields = ("color", "age", "description", "owner", "breed",)
+        fields = (
+            "color",
+            "age",
+            "description",
+            "owner",
+            "breed",
+        )
         read_only_fields = ("owner",)
 
 
@@ -18,7 +24,9 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class CatSerializer(serializers.ModelSerializer):
-    reviews = serializers.StringRelatedField(many=True,)
+    reviews = serializers.StringRelatedField(
+        many=True,
+    )
 
     class Meta:
         model = models.Cat

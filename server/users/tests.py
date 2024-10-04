@@ -13,10 +13,10 @@ def test_create_user_view():
         "username": "testuser",
         "password": "TestPassword123",
     }
-    url = reverse('user-list')
+    url = reverse("register")
 
-    response = client.post(url, user_data, format='json')
+    response = client.post(url, user_data, format="json")
     assert response.status_code == status.HTTP_201_CREATED
 
-    user = Profile.objects.get(username=user_data['username'])
-    assert user.username == user_data['username']
+    user = Profile.objects.get(username=user_data["username"])
+    assert user.username == user_data["username"]

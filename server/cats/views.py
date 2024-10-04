@@ -11,7 +11,7 @@ class CatView(viewsets.ModelViewSet, mixins.DestroyModelMixin):
         DjangoFilterBackend,
         filters.OrderingFilter,
     ]
-    filterset_fields = ['breed']
+    filterset_fields = ["breed"]
     ordering_fields = "__all__"
 
     def get_serializer_class(self):

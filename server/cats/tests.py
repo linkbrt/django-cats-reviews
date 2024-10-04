@@ -10,9 +10,11 @@ from users.models import Profile
 def api_client():
     return APIClient()
 
+
 @pytest.fixture()
 def create_breed():
     return Breed.objects.create(title="Test breed")
+
 
 @pytest.fixture
 def create_user():
@@ -27,7 +29,11 @@ def another_user():
 @pytest.fixture
 def create_cat(create_user, create_breed):
     return Cat.objects.create(
-        owner=create_user, color="black", description="Cute cat", age=3, breed=create_breed
+        owner=create_user,
+        color="black",
+        description="Cute cat",
+        age=3,
+        breed=create_breed,
     )
 
 
@@ -40,7 +46,12 @@ def create_review(create_user, create_cat):
 def test_create_cat(api_client, create_user, create_breed):
     api_client.force_authenticate(user=create_user)
     url = reverse("cat-list")
-    data = {"color": "white", "description": "Fluffy cat", "age": 2, "breed": create_breed.id}
+    data = {
+        "color": "white",
+        "description": "Fluffy cat",
+        "age": 2,
+        "breed": create_breed.id,
+    }
 
     response = api_client.post(url, data, format="json")
     assert response.status_code == status.HTTP_201_CREATED
@@ -51,7 +62,12 @@ def test_create_cat(api_client, create_user, create_breed):
 def test_update_cat(api_client, create_user, create_cat, create_breed):
     api_client.force_authenticate(user=create_user)
     url = reverse("cat-detail", kwargs={"pk": create_cat.id})
-    data = {"color": "gray", "description": "Updated description", "age": 5, "breed": create_breed.id}
+    data = {
+        "color": "gray",
+        "description": "Updated description",
+        "age": 5,
+        "breed": create_breed.id,
+    }
 
     response = api_client.put(url, data, format="json")
     assert response.status_code == status.HTTP_200_OK
@@ -64,7 +80,12 @@ def test_update_cat(api_client, create_user, create_cat, create_breed):
 def test_update_cat_unauthorized(api_client, another_user, create_cat, create_breed):
     api_client.force_authenticate(user=another_user)
     url = reverse("cat-detail", kwargs={"pk": create_cat.id})
-    data = {"color": "brown", "description": "Updated by another user", "age": 4, "breed": create_breed.id}
+    data = {
+        "color": "brown",
+        "description": "Updated by another user",
+        "age": 4,
+        "breed": create_breed.id,
+    }
 
     response = api_client.put(url, data, format="json")
     assert response.status_code == status.HTTP_403_FORBIDDEN
@@ -97,9 +118,9 @@ def test_create_review(api_client, create_user, create_cat):
         "stars": 5,
     }
 
-    url = reverse('review-list')
+    url = reverse("review-list")
 
-    response = api_client.post(url, review_data, format='json')
+    response = api_client.post(url, review_data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
     assert Review.objects.count() == 1
@@ -115,9 +136,9 @@ def test_update_review(api_client, create_user, create_cat, create_review):
         "stars": 5,
     }
 
-    url = reverse('review-detail', args=[create_review.id])
+    url = reverse("review-detail", args=[create_review.id])
 
-    response = api_client.put(url, updated_data, format='json')
+    response = api_client.put(url, updated_data, format="json")
 
     assert response.status_code == status.HTTP_200_OK
     create_review.refresh_from_db()
@@ -125,16 +146,15 @@ def test_update_review(api_client, create_user, create_cat, create_review):
 
 
 @pytest.mark.django_db
-def test_update_review_unauthorized(api_client, another_user, create_cat, create_review):
+def test_update_review_unauthorized(
+    api_client, another_user, create_cat, create_review
+):
     api_client.force_authenticate(user=another_user)
-    updated_data = {
-        "stars": 2,
-        "cat": create_cat.id
-    }
+    updated_data = {"stars": 2, "cat": create_cat.id}
 
-    url = reverse('review-detail', args=[create_review.id])
+    url = reverse("review-detail", args=[create_review.id])
 
-    response = api_client.put(url, updated_data, format='json')
+    response = api_client.put(url, updated_data, format="json")
 
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
@@ -142,7 +162,7 @@ def test_update_review_unauthorized(api_client, another_user, create_cat, create
 @pytest.mark.django_db
 def test_delete_review(api_client, create_user, create_review):
     api_client.force_authenticate(user=create_user)
-    url = reverse('review-detail', args=[create_review.id])
+    url = reverse("review-detail", args=[create_review.id])
 
     response = api_client.delete(url)
 
@@ -151,9 +171,11 @@ def test_delete_review(api_client, create_user, create_review):
 
 
 @pytest.mark.django_db
-def test_delete_review_unauthorized(api_client, create_user, another_user, create_review):
+def test_delete_review_unauthorized(
+    api_client, create_user, another_user, create_review
+):
     api_client.force_authenticate(user=another_user)
-    url = reverse('review-detail', args=[create_review.id])
+    url = reverse("review-detail", args=[create_review.id])
 
     response = api_client.delete(url)
 
